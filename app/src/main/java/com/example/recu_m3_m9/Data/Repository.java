@@ -1,6 +1,7 @@
 package com.example.recu_m3_m9.Data;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -27,7 +28,7 @@ public class Repository {
 
     private Repository(Context context){
         this.context = context;
-        listacont = new MutableLiveData<>();
+
 
     }
 
@@ -38,6 +39,10 @@ public class Repository {
         return srepository;
     }
     public static Repository getRepository(){return srepository;}
+
+    public MutableLiveData<ArrayList<Cliente>> getListacont() {
+        return listacont;
+    }
 
     public static Connection openPostgresConnection(){
         try {
@@ -62,30 +67,9 @@ public class Repository {
 
 
 
-    public static ArrayList<Cliente> getCliente(){
-        ArrayList<Cliente> listac= new ArrayList<>();
-        Cliente cliente= new Cliente();
-        ResultSet rs= null;
 
 
-        try {
-            Statement stmt = null;
-            stmt = connection.createStatement();
-            String query= "select * from cliente;";
-            rs= stmt.executeQuery(query);
-            while (rs.next()){
-                cliente.setID(rs.getInt("id"));
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setNombre(rs.getDate("edad").toString());
-                listac.add(cliente);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return listac;
 
-
-    }
 
 
 
